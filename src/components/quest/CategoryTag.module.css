@@ -1,0 +1,73 @@
+/* ── Shared base ────────────────────────────────────── */
+
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 28px;
+  padding: 8px 12px;
+  background: var(--ql-cat-bg, var(--ql-cat-keep-management-bg));
+  border: none;
+  border-radius: 256px;
+  overflow: hidden;
+}
+
+/* Font changed to Gentium Plus Bold to match updated Figma spec */
+.text {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: var(--ql-label-line-height);
+  text-align: center;
+  color: var(--ql-cat-fg, var(--ql-cat-keep-management-fg));
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+/* ── Filter button variant ──────────────────────────── */
+
+/* Override card padding and add gap for the count badge */
+.button {
+  cursor: pointer;
+  padding: 12px 16px;
+  gap: 8px;
+  transition: transform 120ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+/* Larger text in filter mode */
+.button .text {
+  font-size: 20px;
+}
+
+.count {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: var(--ql-label-line-height);
+  color: var(--ql-cat-fg, var(--ql-cat-keep-management-fg));
+  white-space: nowrap;
+}
+
+/* ── Zero-results state ─────────────────────────────── */
+
+/* Slightly faded when the category has no quests in the current filter pool */
+.button[data-empty] {
+  opacity: 0.8;
+}
+
+/* ── Selected state (filter only) ───────────────────── */
+
+/* Flip bg to the category's own FG colour; text becomes white */
+.button[aria-pressed="true"] {
+  background: var(--ql-cat-fg);
+}
+
+.button[aria-pressed="true"] .text,
+.button[aria-pressed="true"] .count {
+  color: white;
+}

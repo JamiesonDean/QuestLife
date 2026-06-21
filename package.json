@@ -1,0 +1,33 @@
+{
+  "name": "questlife",
+  "version": "0.1.0",
+  "description": "QuestLife — an RPG-style productivity tool",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "VITE_APP_MODE=owner vite --port 5173",
+    "dev:owner": "VITE_APP_MODE=owner vite --port 5173",
+    "dev:public": "VITE_APP_MODE=public vite --port 5174",
+    "build": "npm run build:public",
+    "build:owner": "VITE_APP_MODE=owner VITE_BUILD_OWNER=true tsc -b && VITE_APP_MODE=owner VITE_BUILD_OWNER=true vite build",
+    "build:public": "VITE_APP_MODE=public tsc -b && VITE_APP_MODE=public vite build && node scripts/verify-public-bundle.mjs",
+    "check:live": "node scripts/check-live.mjs",
+    "preview": "VITE_APP_MODE=owner vite preview --port 4173",
+    "preview:owner": "VITE_APP_MODE=owner vite preview --port 4173",
+    "preview:public": "VITE_APP_MODE=public vite preview --port 4174"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
+  }
+}

@@ -1,0 +1,43 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background: var(--ql-answer-bg);
+  color: var(--ql-answer-fg);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.button[data-variant="yes"] {
+  width: 81px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.label {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: var(--ql-label-line-height);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.button[data-selected] {
+  outline: 2px solid var(--ql-discipline-color);
+  outline-offset: -2px;
+}

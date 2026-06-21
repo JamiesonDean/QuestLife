@@ -1,0 +1,214 @@
+/**
+ * QuestLife design tokens — values taken directly from the Figma Quest Card
+ * frame (neutral state).
+ */
+
+:root {
+  /* Surfaces */
+  --ql-bg-app: #353535;
+  --ql-bg-header: #d8d8d8;
+  --ql-bg-image: url("../assets/beregost-bg.png");
+  --ql-bg-image-aspect: calc(1200 / 900);
+  --ql-bg-overlay-opacity: 0.8;
+
+  /** Semi-transparent panel behind character header + quest/discipline columns. */
+  --ql-core-ui-surface: rgba(9, 9, 9, 0.3);
+
+  /* Typography */
+  --ql-font-display: "Gentium Plus", "Gentium", Georgia, serif;
+  --ql-font-heading: "IM Fell English", "Gentium Plus", Georgia, serif;
+  --ql-font-label: "Open Sans", system-ui, sans-serif;
+  --ql-text-on-dark: #ffffff;
+  --ql-text-on-header: #000000;
+
+  /* Small-label token (design system) */
+  --ql-label-font-size: 14px;
+  --ql-label-line-height: 12px;
+
+  /* Quest tier colors (border) + assigned surface tints */
+  --ql-tier-minor: #c3be22; /* olive/chartreuse */
+  --ql-tier-minor-surface: rgba(195, 190, 34, 0.16);
+  --ql-tier-major: #d78426; /* orange */
+  --ql-tier-major-surface: rgba(215, 132, 38, 0.16);
+  --ql-tier-boss: #bb22c1; /* magenta */
+  --ql-tier-boss-surface: rgba(187, 34, 193, 0.16);
+
+  /* Category tag palettes (background / text) */
+  --ql-cat-keep-management-bg: #f9f2eb;
+  --ql-cat-keep-management-fg: #ae5d00;
+  --ql-cat-vitality-bg: #fbebeb;
+  --ql-cat-vitality-fg: #cd0108;
+  --ql-cat-crafting-bg: #faebf3;
+  --ql-cat-crafting-fg: #c3006a;
+  --ql-cat-design-guild-bg: #f3ebfa;
+  --ql-cat-design-guild-fg: #6500c4;
+  --ql-cat-alliances-bg: #ebf3f3;
+  --ql-cat-alliances-fg: #006f6d;
+  --ql-cat-lore-bg: #ebedfa;
+  --ql-cat-lore-fg: #0023c1;
+
+  /* XP reward badge */
+  --ql-xp-bg: #08a900;
+  --ql-xp-fg: #ffffff;
+  --ql-xp-border-gradient: linear-gradient(
+    145deg,
+    #FFFA89 0%,
+    #FFFA89 15%,
+    #067a00 65%,
+    #055900 100%
+  );
+
+  /* Completed card surfaces */
+  --ql-completed-quest-surface: rgba(8, 169, 0, 0.16);
+  --ql-completed-discipline-check-surface: rgba(0, 77, 255, 0.08);
+  --ql-completed-discipline-yesno-surface: rgba(229, 131, 26, 0.08);
+  --ql-completed-title: rgba(255, 255, 255, 0.74);
+
+  /* Completed XP reward badge (gold) */
+  --ql-xp-completed-border-gradient: linear-gradient(
+    145deg,
+    #d4c80c 0%,
+    #bfa10a 35%,
+    #aa7b07 65%,
+    #b95a08 100%
+  );
+  --ql-xp-completed-gradient: radial-gradient(
+    120% 140% at 70% 100%,
+    #aa7b07 0%,
+    #bfa10a 50%,
+    #d4c80c 100%
+  );
+
+  /* Discipline cards (border + assigned surface tint, per kind) */
+  --ql-discipline-check-color: #004dff; /* blue — "check off per day" */
+  --ql-discipline-check-surface: rgba(0, 77, 255, 0.16);
+  --ql-discipline-yesno-color: #e5831a; /* orange — yes/no answer */
+  --ql-discipline-yesno-surface: rgba(229, 131, 26, 0.16);
+  --ql-discipline-title-size: 24px;
+  --ql-discipline-subtitle-size: 20px;
+
+  /* Discipline answer button */
+  --ql-answer-bg: #e7e7e7;
+  --ql-answer-fg: #151515;
+
+  /* Stat chip tones (signed delta: gain / loss) */
+  --ql-stat-gain-bg: #ebf8eb;
+  --ql-stat-gain-fg: #078100;
+  --ql-stat-gain-glow: rgba(6, 168, 0, 0.5);
+  --ql-stat-loss-bg: #fbebeb;
+  --ql-stat-loss-fg: #cd0108;
+  --ql-stat-loss-glow: rgba(206, 0, 151, 0.7);
+  --ql-stat-chip-icon-bleed: 20px;
+
+  /* Completed stat chips */
+  --ql-stat-completed-gain-bg: #078100;
+  --ql-stat-completed-gain-fg: #ebf8eb;
+  --ql-stat-completed-loss-bg: #cd0108;
+  --ql-stat-completed-loss-fg: #ffffff;
+  --ql-stat-completed-glow: rgba(255, 250, 137, 0.75);
+
+  /* Vitals bars (character header) */
+  --ql-bar-track: #a1a1a1;
+  --ql-hp-fill: #cd0108;
+  --ql-mana-fill: #242dae;
+  --ql-level-fill: #feae17;
+
+  /* List divider */
+  --ql-divider: #8d8d8d;
+
+  /* Card */
+  --ql-card-radius: 10px;
+  --ql-card-padding: 20px;
+  --ql-card-gap: 20px;
+  --ql-card-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  /* List enter / exit / update animations */
+  --ql-list-animation-duration: 760ms;
+  --ql-list-animation-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/**
+ * Scale theming hook. `data-scale="..."` resolves the active scale color +
+ * surface tint for its subtree, so the card border/fill follow quest size.
+ */
+[data-scale="minor"],
+[data-tier="minor"] {
+  --ql-scale-color: var(--ql-tier-minor);
+  --ql-scale-surface: var(--ql-tier-minor-surface);
+  --ql-tier-color: var(--ql-tier-minor);
+  --ql-tier-surface: var(--ql-tier-minor-surface);
+}
+
+[data-scale="major"],
+[data-tier="major"] {
+  --ql-scale-color: var(--ql-tier-major);
+  --ql-scale-surface: var(--ql-tier-major-surface);
+  --ql-tier-color: var(--ql-tier-major);
+  --ql-tier-surface: var(--ql-tier-major-surface);
+}
+
+[data-scale="boss"],
+[data-tier="boss"] {
+  --ql-scale-color: var(--ql-tier-boss);
+  --ql-scale-surface: var(--ql-tier-boss-surface);
+  --ql-tier-color: var(--ql-tier-boss);
+  --ql-tier-surface: var(--ql-tier-boss-surface);
+}
+
+/**
+ * Discipline kind theming hook. `data-kind="..."` resolves the card border +
+ * surface tint for its subtree.
+ */
+[data-kind="check"],
+[data-kind="streak"] {
+  --ql-discipline-color: var(--ql-discipline-check-color);
+  --ql-discipline-surface: var(--ql-discipline-check-surface);
+}
+[data-kind="yes-no"] {
+  --ql-discipline-color: var(--ql-discipline-yesno-color);
+  --ql-discipline-surface: var(--ql-discipline-yesno-surface);
+}
+
+/**
+ * Stat chip tone hook. `data-tone="..."` resolves the chip fill, text color and
+ * icon glow for a signed delta.
+ */
+[data-tone="gain"] {
+  --ql-stat-bg: var(--ql-stat-gain-bg);
+  --ql-stat-fg: var(--ql-stat-gain-fg);
+  --ql-stat-glow: var(--ql-stat-gain-glow);
+}
+[data-tone="loss"] {
+  --ql-stat-bg: var(--ql-stat-loss-bg);
+  --ql-stat-fg: var(--ql-stat-loss-fg);
+  --ql-stat-glow: var(--ql-stat-loss-glow);
+}
+
+/**
+ * Category theming hook. `data-category="..."` resolves the active category's
+ * tag background + text color for its subtree.
+ */
+[data-category="keep-management"] {
+  --ql-cat-bg: var(--ql-cat-keep-management-bg);
+  --ql-cat-fg: var(--ql-cat-keep-management-fg);
+}
+[data-category="vitality"] {
+  --ql-cat-bg: var(--ql-cat-vitality-bg);
+  --ql-cat-fg: var(--ql-cat-vitality-fg);
+}
+[data-category="crafting"] {
+  --ql-cat-bg: var(--ql-cat-crafting-bg);
+  --ql-cat-fg: var(--ql-cat-crafting-fg);
+}
+[data-category="design-guild"] {
+  --ql-cat-bg: var(--ql-cat-design-guild-bg);
+  --ql-cat-fg: var(--ql-cat-design-guild-fg);
+}
+[data-category="alliances"] {
+  --ql-cat-bg: var(--ql-cat-alliances-bg);
+  --ql-cat-fg: var(--ql-cat-alliances-fg);
+}
+[data-category="lore"] {
+  --ql-cat-bg: var(--ql-cat-lore-bg);
+  --ql-cat-fg: var(--ql-cat-lore-fg);
+}

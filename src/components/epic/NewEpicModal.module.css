@@ -1,0 +1,98 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.2;
+  color: white;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: white;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 88px;
+}
+
+.error {
+  margin: 0;
+  font-family: var(--ql-font-label);
+  font-size: 14px;
+  color: #ff6b6b;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.cancel {
+  padding: 12px 20px;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.cancel:hover {
+  color: white;
+}
+
+.submit {
+  padding: 12px 24px;
+  font-family: var(--ql-font-heading);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+  color: white;
+  background: transparent;
+  border: 2px solid white;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: rgba(255, 255, 255, 0.08);
+}

@@ -1,0 +1,24 @@
+.wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 4px;
+  width: 100%;
+  color: var(--ql-text-on-dark);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.unit {
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.value {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+}

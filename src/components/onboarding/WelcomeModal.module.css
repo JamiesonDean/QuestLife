@@ -1,0 +1,139 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 4vw, 64px);
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  max-width: 560px;
+  max-height: min(900px, 100vh - 48px);
+  padding: 36px;
+  overflow-y: auto;
+  background: rgba(20, 20, 20, 0.96);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: var(--ql-card-shadow);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ql-font-heading);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.1;
+  color: white;
+}
+
+.lede {
+  margin: 4px 0 0;
+  font-family: var(--ql-font-display);
+  font-size: 18px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.framework {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.frameworkHeading {
+  margin: 0;
+  font-family: var(--ql-font-heading);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.2;
+  color: white;
+}
+
+.termList {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.termRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.term {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  color: white;
+}
+
+.detail {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.primaryAction,
+.secondaryAction {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: var(--ql-font-heading);
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    transform 120ms ease;
+}
+
+.primaryAction {
+  color: white;
+  background: rgba(100, 60, 180, 0.5);
+  border: 2px solid rgba(200, 160, 255, 0.7);
+}
+
+.primaryAction:hover {
+  background: rgba(120, 80, 200, 0.55);
+  transform: translateY(-1px);
+}
+
+.secondaryAction {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+}
+
+.secondaryAction:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}

@@ -1,0 +1,10 @@
+.label {
+  margin: 0;
+  width: 100%;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--ql-text-on-dark);
+  word-break: break-word;
+}

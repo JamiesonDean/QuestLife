@@ -1,0 +1,174 @@
+.card {
+  display: flex;
+  width: 100%;
+  padding: var(--ql-card-padding);
+  background: var(--ql-discipline-surface);
+  border: 1.5px solid var(--ql-discipline-color);
+  border-radius: var(--ql-card-radius);
+  box-shadow: var(--ql-card-shadow);
+  transition: opacity 120ms ease, transform 120ms ease;
+  overflow: visible;
+}
+
+.card[data-interactive] {
+  cursor: pointer;
+}
+
+.card[data-interactive]:hover {
+  transform: translateY(-1px);
+}
+
+.card[data-done] {
+  align-items: center;
+  justify-content: space-between;
+  opacity: 1;
+  border: none;
+  box-shadow: var(--ql-card-shadow);
+}
+
+.card[data-kind="check"][data-done] {
+  background: var(--ql-completed-discipline-check-surface);
+}
+
+.card[data-kind="yes-no"][data-done] {
+  background: var(--ql-completed-discipline-yesno-surface);
+}
+
+.completedRow {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+}
+
+.completedTitle {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: var(--ql-discipline-title-size);
+  line-height: 1.5;
+  color: var(--ql-completed-title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.completedRewards {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.card[data-kind="check"] {
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.card[data-kind="yes-no"] {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card[data-kind="streak"] {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.main {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.prompt {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.streakMain {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: var(--ql-discipline-subtitle-size);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: var(--ql-discipline-title-size);
+  line-height: 1.5;
+  color: var(--ql-text-on-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rewards {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 10px;
+  min-width: 91px;
+  overflow: visible;
+}
+
+.outcomes {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  gap: 26px;
+  position: relative;
+  min-height: 34px;
+  overflow: visible;
+}
+
+.streakRewards {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  gap: 10px;
+  min-width: 91px;
+  overflow: visible;
+}
+
+.slash {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-family: var(--ql-font-label);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}

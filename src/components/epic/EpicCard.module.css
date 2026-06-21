@@ -1,0 +1,189 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid white;
+  border-radius: 20px;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.card[role="button"] {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Gold glow — selected state */
+.card[data-pressed] {
+  background: rgba(243, 182, 0, 0.08);
+  border-color: #f3b600;
+  box-shadow: 0 0 6px 0 rgba(243, 215, 0, 0.75);
+}
+
+/* ── Icon tile ──────────────────────────────────────── */
+
+.iconTile {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Clip-style icon */
+.iconClip {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.iconImg {
+  position: absolute;
+  max-width: none;
+}
+
+/* Fill-style icon (object-cover, pixel-crisp) */
+.iconFill {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Mask-style icon (SVG shape mask over a fill image) */
+.iconMask {
+  width: 100%;
+  height: 100%;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+}
+
+/* ── Text ───────────────────────────────────────────── */
+
+.name {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  color: white;
+  text-align: center;
+}
+
+.description {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  color: white;
+  text-align: center;
+}
+
+/* ── Progress + tier bar ────────────────────────────── */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.progressRow {
+  display: flex;
+  align-items: baseline;
+}
+
+.completedCount {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 0.9;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Full white when > 0 completed */
+.completedCount[data-active] {
+  color: white;
+}
+
+.slash {
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.8;
+  color: white;
+}
+
+.totalLabel {
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  color: white;
+}
+
+/* ── Tier bar + completed overlay ───────────────────── */
+
+.barWrap {
+  position: relative;
+}
+
+.bar {
+  display: flex;
+  height: 8px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.segMinor,
+.segMajor,
+.segBoss {
+  flex: 1;
+  opacity: 0.5;
+}
+
+.segMinor[data-assigned],
+.segMajor[data-assigned],
+.segBoss[data-assigned] {
+  opacity: 1;
+}
+
+.segMinor {
+  background: var(--ql-tier-minor);
+}
+
+.segMajor {
+  background: var(--ql-tier-major);
+}
+
+.segBoss {
+  background: var(--ql-tier-boss);
+}
+
+/* Green bar overlaid on top of the tier bar */
+.completedBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  border-radius: 10px;
+  background: #08a900;
+  pointer-events: none;
+  transition: width 300ms ease;
+}

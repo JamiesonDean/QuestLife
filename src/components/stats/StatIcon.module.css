@@ -1,0 +1,24 @@
+.box {
+  position: relative;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.cropImg {
+  position: absolute;
+  max-width: none;
+}
+
+.maskLayer {
+  position: absolute;
+  pointer-events: none;
+}
+
+.maskImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}

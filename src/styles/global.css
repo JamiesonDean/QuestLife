@@ -1,0 +1,61 @@
+@import "./theme.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--ql-bg-app);
+  min-height: 100%;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ql-text-on-dark);
+  font-family: var(--ql-font-display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  isolation: isolate;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+}
+
+/* Beregost map — height-fit first; width-fit when the viewport is wider (aspect kept). */
+body::before {
+  z-index: -2;
+  top: 50%;
+  left: 50%;
+  width: max(100vw, calc(100vh * var(--ql-bg-image-aspect)));
+  height: max(100vh, calc(100vw / var(--ql-bg-image-aspect)));
+  transform: translate(-50%, -50%);
+  background-image: var(--ql-bg-image);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+/* Charcoal wash over the map so UI stays legible. */
+body::after {
+  z-index: -1;
+  inset: 0;
+  background-color: var(--ql-bg-app);
+  opacity: var(--ql-bg-overlay-opacity);
+}
+
+#root {
+  position: relative;
+  z-index: 0;
+}

@@ -1,0 +1,11 @@
+.title {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: var(--ql-discipline-title-size);
+  line-height: 1.5;
+  color: var(--ql-text-on-dark);
+  overflow-wrap: break-word;
+}

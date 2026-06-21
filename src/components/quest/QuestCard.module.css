@@ -1,0 +1,216 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: var(--ql-card-padding);
+  background: var(--ql-scale-surface, var(--ql-scale-minor-surface));
+  border: 1.5px solid var(--ql-scale-color, var(--ql-scale-minor));
+  border-radius: var(--ql-card-radius);
+  box-shadow: var(--ql-card-shadow);
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.card[data-track="side"] {
+  background: var(--ql-discipline-check-surface);
+  border: 1.5px solid var(--ql-discipline-check-color);
+}
+
+/* ── Unassigned (All Quests) — muted default, brighter on hover ── */
+
+.card[data-scale="minor"][data-unassigned] {
+  background: rgba(195, 190, 34, 0.04);
+  border-color: rgba(195, 190, 34, 0.5);
+}
+
+.card[data-scale="minor"][data-unassigned]:hover {
+  background: rgba(195, 190, 34, 0.06);
+  border-color: rgba(195, 190, 34, 0.7);
+}
+
+.card[data-scale="major"][data-unassigned] {
+  background: rgba(215, 132, 38, 0.04);
+  border-color: rgba(215, 132, 38, 0.5);
+}
+
+.card[data-scale="major"][data-unassigned]:hover {
+  background: rgba(215, 132, 38, 0.06);
+  border-color: rgba(215, 132, 38, 0.7);
+}
+
+.card[data-scale="boss"][data-unassigned] {
+  background: rgba(187, 34, 193, 0.04);
+  border-color: rgba(187, 34, 193, 0.5);
+}
+
+.card[data-scale="boss"][data-unassigned]:hover {
+  background: rgba(187, 34, 193, 0.06);
+  border-color: rgba(187, 34, 193, 0.7);
+}
+
+.card[data-track="side"][data-unassigned] {
+  background: rgba(0, 77, 255, 0.04);
+  border-color: rgba(0, 77, 255, 0.5);
+}
+
+.card[data-track="side"][data-unassigned]:hover {
+  background: rgba(0, 77, 255, 0.06);
+  border-color: rgba(0, 77, 255, 0.7);
+}
+
+.card[data-unassigned] {
+  --ql-quest-dim-opacity: 0.7;
+}
+
+.card[data-unassigned]:hover {
+  --ql-quest-dim-opacity: 0.9;
+}
+
+.card[data-completed-today],
+.card[data-completed-archived] {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ql-card-gap);
+  border: none;
+  box-shadow: var(--ql-card-shadow);
+}
+
+.card[data-completed-today] {
+  background: var(--ql-completed-quest-surface);
+  opacity: 1;
+}
+
+.card[data-completed-archived] {
+  background: var(--ql-completed-quest-surface);
+  opacity: 0.4;
+}
+
+.card[data-interactive] {
+  cursor: pointer;
+}
+
+.card[data-interactive]:hover {
+  transform: translateY(-1px);
+}
+
+.card[data-unassigned][data-interactive]:hover {
+  transform: none;
+}
+
+.completedRow {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.completedTitle {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.5;
+  color: var(--ql-completed-title);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card[data-completed-today] > :last-child,
+.card[data-completed-archived] > :last-child {
+  flex-shrink: 0;
+}
+
+/* ── Two-column body (Figma: parallel flex columns, 10px row gap) ── */
+
+.body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ql-card-gap);
+  width: 100%;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.leftColumn {
+  flex: 1 1 auto;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.rightColumn {
+  flex-shrink: 0;
+  align-items: flex-end;
+}
+
+.cellTitle {
+  width: 100%;
+  min-width: 0;
+}
+
+.cellCategory {
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+
+.cellMeta {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+}
+
+.cellLevel {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 112px;
+  height: 30px;
+}
+
+.cellEpic {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+}
+
+.cellEpic[data-empty] {
+  visibility: hidden;
+}
+
+.cellReward {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cellActions {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+[data-dimmed] {
+  opacity: var(--ql-quest-dim-opacity, 1);
+  transition: opacity 150ms ease;
+}

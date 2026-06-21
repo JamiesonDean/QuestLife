@@ -1,0 +1,125 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.publicDemoBanner {
+  margin: 0;
+  padding: 8px 16px;
+  text-align: center;
+  font-family: var(--ql-font-ui, "Open Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #3d2e1f;
+  background: #e8dcc8;
+  border-bottom: 1px solid #c4b59a;
+}
+
+.landing {
+  flex: 1;
+  min-height: 0;
+}
+
+.screen {
+  flex: 1;
+  min-height: 0;
+  padding: clamp(40px, 5vw, 80px) clamp(24px, 5vw, 96px) clamp(24px, 5vw, 96px);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  max-width: 1304px;
+  margin: 0 auto;
+}
+
+.corePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  padding: 40px;
+  background: var(--ql-core-ui-surface);
+  border-radius: var(--ql-card-radius);
+}
+
+.columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.column {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.discHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 72px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--ql-divider);
+}
+
+.discTitle {
+  margin: 0;
+  font-family: var(--ql-font-heading);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--ql-text-on-dark);
+  white-space: nowrap;
+}
+
+.discTotals {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 6px;
+}
+
+.totalVal {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  color: #ebf8eb;
+}
+
+.seeAll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 56px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ql-text-on-dark);
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: var(--ql-discipline-title-size);
+}
+
+.chevron {
+  width: 30px;
+  height: 30px;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}

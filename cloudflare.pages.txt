@@ -1,0 +1,10 @@
+# Cloudflare Pages
+#
+# Build command:          npm run build:public
+# Build output directory: dist   (also set in wrangler.toml)
+# Root directory:         /
+#
+# Variables & secrets:   leave empty
+#
+# After deploy, verify from your machine:
+#   npm run check:live -- https://YOUR-SITE.pages.dev

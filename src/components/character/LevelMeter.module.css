@@ -1,0 +1,25 @@
+.meter {
+  position: relative;
+  width: 47px;
+  height: 128px;
+  background: var(--ql-bar-track);
+  flex-shrink: 0;
+}
+
+.fill {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: var(--ql-level-fill);
+}
+
+.arrow {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  width: 40px;
+  height: auto;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.35));
+}

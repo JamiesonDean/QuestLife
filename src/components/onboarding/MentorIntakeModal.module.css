@@ -1,0 +1,24 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 4vw, 64px);
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  max-height: min(920px, 100vh - 48px);
+  padding: 32px;
+  overflow-y: auto;
+  background: rgba(20, 20, 20, 0.96);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: var(--ql-card-shadow);
+}

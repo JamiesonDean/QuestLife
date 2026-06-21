@@ -1,0 +1,85 @@
+/**
+ * Layout boundary = the chip box only. Icon paint overflows; it does not
+ * expand the box in flex/grid (siblings align to the 34px-tall rectangle).
+ */
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 34px;
+  min-width: 68px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: var(--ql-stat-bg);
+  overflow: visible;
+  margin-right: var(--ql-stat-chip-icon-bleed);
+}
+
+.chip[data-tone="gain"] {
+  --ql-stat-bg: #ebf8eb;
+  --ql-stat-fg: #078100;
+}
+
+.chip[data-tone="loss"] {
+  --ql-stat-bg: #fbebeb;
+  --ql-stat-fg: #cd0108;
+}
+
+.chip[data-completed][data-tone="gain"] {
+  --ql-stat-bg: var(--ql-stat-completed-gain-bg);
+  --ql-stat-fg: var(--ql-stat-completed-gain-fg);
+}
+
+.chip[data-completed][data-tone="loss"] {
+  --ql-stat-bg: var(--ql-stat-completed-loss-bg);
+  --ql-stat-fg: var(--ql-stat-completed-loss-fg);
+}
+
+.value {
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: var(--ql-label-line-height);
+  white-space: nowrap;
+  color: var(--ql-stat-fg);
+}
+
+/* Figma mask-group anchor — bottle body centre lands on chip right edge. */
+.iconGroup {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.iconLayer {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Light green glow on the bottle only (Figma gain chip). */
+.chip[data-tone="gain"]:not([data-completed]) .iconLayer {
+  filter: drop-shadow(0 0 2px var(--ql-stat-gain-glow));
+}
+
+/* Deep purple glow on the bottle only (Figma loss chip). */
+.chip[data-tone="loss"]:not([data-completed]) .iconLayer {
+  filter: drop-shadow(0 0 2px var(--ql-stat-loss-glow));
+}
+
+.chip[data-completed][data-tone="gain"] .iconLayer {
+  filter: drop-shadow(0 0 3px var(--ql-stat-completed-glow));
+}
+
+.chip[data-completed][data-tone="loss"] .iconLayer {
+  filter: drop-shadow(0 0 2px var(--ql-stat-loss-glow));
+}
+
+.iconImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
