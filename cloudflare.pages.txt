@@ -1,8 +1,14 @@
-# Cloudflare Pages (Git connected)
+# Cloudflare (Git connected — Workers Builds UI)
+#
+# If Deploy Command is REQUIRED (cannot be blank), use Workers static assets:
 #
 # Build command:     npm run build:public
-# Build output:      dist
-# Deploy command:    LEAVE EMPTY (do not use wrangler)
-# Node:              22 (uses .node-version)
+# Deploy command:    npx wrangler deploy
+# Root directory:    (blank)
 #
-# Do NOT add wrangler.toml — it breaks static deploys.
+# wrangler.jsonc points at ./dist — no separate "output directory" field needed.
+#
+# Site URL will be:  https://questlife.<your-subdomain>.workers.dev
+#
+# Alternative if you created a classic Pages project instead:
+#   Deploy command:  npx wrangler pages deploy dist --project-name=questlife
