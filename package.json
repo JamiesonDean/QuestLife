@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "QuestLife — an RPG-style productivity tool",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "type": "module",
   "scripts": {
     "dev": "VITE_APP_MODE=owner vite --port 5173",
