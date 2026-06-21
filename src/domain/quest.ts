@@ -6,7 +6,7 @@
  * - track        — importance: main (critical path) or side (optional)
  * - category     — one of the six life domains
  * - unlockLevel  — player level at which the quest unlocks (soft gate)
- * - epic         — optional campaign the quest belongs to
+ * - epic         — optional Storyline the quest belongs to
  * - xp           — reward granted on completion
  *
  * Lifecycle (future / unassigned / assigned / completed) is derived from
@@ -80,16 +80,43 @@ export const TRACKS: Record<Track, TrackMeta> = {
 export interface CategoryMeta {
   key: Category;
   label: string;
+  description: string;
 }
 
 export const CATEGORIES: Record<Category, CategoryMeta> = {
-  "keep-management": { key: "keep-management", label: "Keep Management" },
-  vitality: { key: "vitality", label: "Vitality" },
-  crafting: { key: "crafting", label: "Crafting" },
-  "design-guild": { key: "design-guild", label: "Design Guild" },
-  alliances: { key: "alliances", label: "Alliances" },
-  lore: { key: "lore", label: "Lore" },
+  "keep-management": {
+    key: "keep-management",
+    label: "Upkeep",
+    description: "Money, bills, taxes, insurance, and paperwork — the maintenance that keeps life running.",
+  },
+  vitality: {
+    key: "vitality",
+    label: "Vitality",
+    description: "Physical health, fitness, sleep, and the energy you need for everything else.",
+  },
+  crafting: {
+    key: "crafting",
+    label: "Crafting",
+    description: "Making things, building skills, and practice that produces real output.",
+  },
+  "design-guild": {
+    key: "design-guild",
+    label: "Guild",
+    description: "Your job, career, and the professional work and ambitions that shape your livelihood.",
+  },
+  alliances: {
+    key: "alliances",
+    label: "Alliances",
+    description: "Relationships, family, friends, and the communities you belong to.",
+  },
+  lore: {
+    key: "lore",
+    label: "Lore",
+    description: "Learning, reading, research, and expanding what you know.",
+  },
 };
+
+export const CATEGORY_ORDER = Object.keys(CATEGORIES) as Category[];
 
 export interface NewQuestInput {
   title: string;
@@ -173,7 +200,7 @@ export function createQuest(input: NewQuestInput, existingIds: Set<string>): Que
 
   const epic = input.epic?.trim();
   if (input.track === "side" && epic) {
-    throw new Error("Side quests cannot belong to an epic.");
+    throw new Error("Side quests cannot belong to a Storyline.");
   }
 
   return {

@@ -5,7 +5,7 @@ import findLifePartnerIcon from "./epic-icons/find-life-partner.svg";
 import healthEnergyIcon from "./epic-icons/health-energy.svg";
 
 /**
- * Pixel-art epic icons inside the 96×96 white tile (fill = cover inner area).
+ * Pixel-art epic icons inside the 96×96 white tile (contain-fit, 10px inset).
  */
 export type EpicIconConfig = { kind: "fill"; src: string };
 
@@ -17,7 +17,7 @@ export const DEFAULT_EPIC_ICON: EpicIconConfig = {
   src: defaultEpicIcon,
 };
 
-/** Public demo — Morgan/tutorial epics and generic fallbacks only. */
+/** Public demo — Jules/tutorial epics and generic fallbacks only. */
 export const EPIC_ICON_CONFIGS: Record<string, EpicIconConfig> = {
   "Advance My Career": { kind: "fill", src: advanceCareerIcon },
   "Financial Stability": { kind: "fill", src: financialStabilityIcon },

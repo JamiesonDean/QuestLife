@@ -137,3 +137,27 @@
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
+
+.dismissAction {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: var(--ql-font-heading);
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    transform 120ms ease;
+}
+
+.dismissAction:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}

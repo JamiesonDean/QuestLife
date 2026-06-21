@@ -1,17 +1,15 @@
-import { epicIconSrcFor } from "@questlife/epicIcons";
+import { EpicIconTile } from "../epic/EpicIconTile.tsx";
 import styles from "./EpicTag.module.css";
 
 export interface EpicTagProps {
   epic: string;
 }
 
-/** Epic row — 24px pixel icon tile + epic name. */
+/** Storyline row — 24px pixel icon tile + storyline name. */
 export function EpicTag({ epic }: EpicTagProps) {
   return (
     <div className={styles.row}>
-      <span className={styles.iconTile}>
-        <img className={styles.iconFill} src={epicIconSrcFor(epic)} alt="" />
-      </span>
+      <EpicIconTile name={epic} size={24} />
       <p className={styles.name}>{epic}</p>
     </div>
   );

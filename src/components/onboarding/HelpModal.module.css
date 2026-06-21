@@ -1,0 +1,63 @@
+.panel {
+  max-width: 640px;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.lede {
+  font-size: 20px;
+  color: var(--ql-text-on-dark);
+}
+
+.frameworkHeading {
+  font-size: 32px;
+}
+
+.termList {
+  gap: 18px;
+}
+
+.term {
+  font-size: 24px;
+}
+
+.detail {
+  font-size: 20px;
+  color: var(--ql-text-on-dark);
+}
+
+.categoryList {
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 20px;
+  row-gap: 28px;
+  align-items: start;
+}
+
+.categoryRow {
+  display: contents;
+}
+
+.categoryLabel {
+  grid-column: 1;
+  margin: 0;
+}
+
+.categoryDetail {
+  grid-column: 2;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--ql-text-on-dark);
+}
+
+.dismissAction {
+  font-size: 24px;
+  color: var(--ql-text-on-dark);
+}

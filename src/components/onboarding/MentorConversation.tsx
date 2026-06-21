@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { DIFFICULTY_BY_KEY } from "../../domain/difficulty.ts";
+import { analyzeIntake } from "../../domain/intakeAnalysis.ts";
 import { emptyIntake, type IntakeProfile } from "../../domain/intake.ts";
-import { parseItemsFromProse } from "../../domain/intakeParse.ts";
 import {
   CONVERSATION_STEPS,
   fillMentorTemplate,
@@ -19,15 +19,15 @@ interface TranscriptLine {
   text: string;
 }
 
-type StringField = "playerName" | "northStar" | "blockers" | "resistance";
-type ItemsField = "epics" | "quests" | "disciplines";
+type AnswerField = "playerName" | "northStar" | "blockers" | "dailyHabits";
 
-function isStringField(field: keyof IntakeProfile): field is StringField {
-  return field !== "epics" && field !== "quests" && field !== "disciplines";
-}
-
-function isItemsField(field: keyof IntakeProfile): field is ItemsField {
-  return field === "epics" || field === "quests" || field === "disciplines";
+function isAnswerField(field: keyof IntakeProfile): field is AnswerField {
+  return (
+    field === "playerName" ||
+    field === "northStar" ||
+    field === "blockers" ||
+    field === "dailyHabits"
+  );
 }
 
 export function MentorConversation({ onComplete }: MentorConversationProps) {
@@ -41,6 +41,7 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
   ]);
   const [draft, setDraft] = useState("");
   const threadEndRef = useRef<HTMLDivElement>(null);
+  const analyzeStartedRef = useRef(false);
 
   const step = CONVERSATION_STEPS[stepIndex]!;
 
@@ -56,17 +57,45 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
   }, [transcript, stepIndex]);
 
   useEffect(() => {
-    if (!step.field) {
+    if (!step.field || !isAnswerField(step.field)) {
       setDraft("");
       return;
     }
-    const value = intake[step.field];
-    if (typeof value === "string") {
-      setDraft(value);
-    } else {
-      setDraft("");
-    }
+    setDraft(intake[step.field]);
   }, [stepIndex, step.field, intake]);
+
+  useEffect(() => {
+    if (step.kind !== "analyze") {
+      analyzeStartedRef.current = false;
+      return;
+    }
+    if (analyzeStartedRef.current) return;
+    analyzeStartedRef.current = true;
+
+    const timer = window.setTimeout(() => {
+      setIntake((current) => {
+        const generated = analyzeIntake({
+          northStar: current.northStar,
+          blockers: current.blockers,
+          dailyHabits: current.dailyHabits,
+        });
+        const nextIntake = { ...current, ...generated };
+        const reviewStep = CONVERSATION_STEPS[stepIndex + 1];
+        if (reviewStep) {
+          appendTranscript([
+            {
+              role: "mentor",
+              text: fillMentorTemplate(reviewStep.mentor, nextIntake),
+            },
+          ]);
+        }
+        setStepIndex(stepIndex + 1);
+        return nextIntake;
+      });
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, [step.kind, stepIndex]);
 
   function appendTranscript(lines: TranscriptLine[]) {
     setTranscript((prev) => [...prev, ...lines]);
@@ -86,16 +115,11 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
   }
 
   function handleSkip() {
-    if (!step.field) {
+    if (!step.field || !isAnswerField(step.field)) {
       goNext(intake);
       return;
     }
-    const nextIntake = { ...intake };
-    if (isItemsField(step.field)) {
-      nextIntake[step.field] = [];
-    } else if (isStringField(step.field)) {
-      nextIntake[step.field] = "";
-    }
+    const nextIntake = { ...intake, [step.field]: "" };
     setIntake(nextIntake);
     appendTranscript([{ role: "player", text: "…" }]);
     goNext(nextIntake);
@@ -111,22 +135,12 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
 
   function handleReplySubmit(e: FormEvent) {
     e.preventDefault();
-    if (!step.field) return;
+    if (!step.field || !isAnswerField(step.field)) return;
 
     const value = draft.trim();
     if (!value && !step.optional) return;
 
-    const nextIntake = { ...intake };
-
-    if (step.parseItems && isItemsField(step.field)) {
-      const items = value ? parseItemsFromProse(value) : [];
-      const min = step.listMin ?? 0;
-      if (items.length < min && !(step.optional && items.length === 0)) return;
-      nextIntake[step.field] = items;
-    } else if (isStringField(step.field)) {
-      nextIntake[step.field] = value;
-    }
-
+    const nextIntake = { ...intake, [step.field]: value };
     setIntake(nextIntake);
     appendTranscript([{ role: "player", text: value || "…" }]);
     goNext(nextIntake);
@@ -134,11 +148,13 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
 
   function handleBack() {
     if (stepIndex === 0) return;
-    setStepIndex((i) => i - 1);
+    const prevIndex = step.kind === "review" ? stepIndex - 2 : stepIndex - 1;
+    if (prevIndex < 0) return;
+    setStepIndex(prevIndex);
     setDraft("");
   }
 
-  const showBack = stepIndex > 0 && step.kind !== "review";
+  const showBack = stepIndex > 0 && step.kind !== "analyze";
   const isReply = step.kind === "reply" || step.kind === "reply-short";
 
   return (
@@ -225,20 +241,18 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
           </form>
         )}
 
+        {step.kind === "analyze" && (
+          <div className={styles.analyzing} role="status" aria-live="polite">
+            <p className={styles.hint}>{step.mentor}</p>
+          </div>
+        )}
+
         {step.kind === "review" && (
           <div className={styles.review}>
             <dl className={styles.summary}>
-              <div>
-                <dt>What you seek</dt>
-                <dd>{intake.northStar || "—"}</dd>
-              </div>
-              <div>
-                <dt>Name</dt>
-                <dd>{intake.playerName || "—"}</dd>
-              </div>
               {intake.epics.length > 0 && (
                 <div>
-                  <dt>The larger wars</dt>
+                  <dt>Storylines</dt>
                   <dd>
                     {intake.epics.map((item) => (
                       <span key={item.title}>
@@ -250,46 +264,34 @@ export function MentorConversation({ onComplete }: MentorConversationProps) {
                 </div>
               )}
               <div>
-                <dt>What must move</dt>
+                <dt>Quests</dt>
                 <dd>
-                  {intake.quests.length
-                    ? intake.quests.map((item) => (
-                        <span key={item.title}>
-                          {item.title}
-                          <em>{DIFFICULTY_BY_KEY[item.difficulty].label}</em>
-                        </span>
-                      ))
-                    : "—"}
+                  {intake.quests.map((item) => (
+                    <span key={item.title}>
+                      {item.title}
+                      <em>{DIFFICULTY_BY_KEY[item.difficulty].label}</em>
+                    </span>
+                  ))}
                 </dd>
               </div>
               <div>
-                <dt>Hazards</dt>
-                <dd>{intake.blockers || "—"}</dd>
-              </div>
-              <div>
-                <dt>Unspoken</dt>
-                <dd>{intake.resistance || "—"}</dd>
-              </div>
-              <div>
-                <dt>Daily keep</dt>
+                <dt>Disciplines</dt>
                 <dd>
-                  {intake.disciplines.length
-                    ? intake.disciplines.map((item) => (
-                        <span key={item.title}>
-                          {item.title}
-                          <em>{DIFFICULTY_BY_KEY[item.difficulty].label}</em>
-                        </span>
-                      ))
-                    : "—"}
+                  {intake.disciplines.map((item) => (
+                    <span key={item.title}>
+                      {item.title}
+                      <em>{DIFFICULTY_BY_KEY[item.difficulty].label}</em>
+                    </span>
+                  ))}
                 </dd>
               </div>
             </dl>
             <div className={styles.actions}>
               <button type="button" className={styles.back} onClick={handleBack}>
-                Amend charter
+                Change my answers
               </button>
               <button type="button" className={styles.primary} onClick={handleContinue}>
-                Seal the charter
+                Looks good — begin
               </button>
             </div>
           </div>

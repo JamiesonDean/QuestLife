@@ -1,11 +1,11 @@
 /**
- * An Epic is a named campaign that groups related quests across tiers. Quests
- * opt in by setting `quest.epic` to the epic's `name` string.
+ * A Storyline groups related quests across tiers. Quests opt in by setting
+ * `quest.epic` to the storyline's `name` string.
  */
 export interface Epic {
   /** Must match `Quest.epic` exactly. */
   name: string;
-  /** One-line flavour description shown on the Epic Card. */
+  /** One-line flavour description shown on the Storyline card. */
   description: string;
 }
 
@@ -19,11 +19,11 @@ export function createEpic(
   const trimmedDescription = description.trim();
 
   if (!trimmedName) {
-    throw new Error("Epic name is required.");
+    throw new Error("Storyline title is required.");
   }
 
   if (existingNames.has(trimmedName.toLowerCase())) {
-    throw new Error("An epic with this name already exists.");
+    throw new Error("A Storyline with this title already exists.");
   }
 
   return { name: trimmedName, description: trimmedDescription };

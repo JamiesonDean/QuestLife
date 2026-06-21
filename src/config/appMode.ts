@@ -2,7 +2,7 @@
  * App mode — set at build time via VITE_APP_MODE.
  *
  * - **owner** — local private instance (data in gitignored `private/`). Not deployed.
- * - **public** — shared demo: Morgan + mentor intake only, session-only storage.
+ * - **public** — shared demo for friends: Jules + mentor intake, persists in localStorage.
  *
  * Local dev: create `.env.local` with `VITE_APP_MODE=owner` (do not commit).
  */
@@ -13,5 +13,5 @@ export const APP_MODE: AppMode =
 
 export const IS_OWNER_MODE = APP_MODE === "owner";
 
-/** Public demo resets on reload; owner persists to localStorage. */
-export const SESSION_ONLY_STORAGE = !IS_OWNER_MODE;
+/** Persist character saves in localStorage (public + owner). */
+export const SESSION_ONLY_STORAGE = false;

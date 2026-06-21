@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import { INTRO_FRAMEWORK } from "./introContent.ts";
 import styles from "./WelcomeModal.module.css";
 
 export interface WelcomeModalProps {
@@ -7,23 +8,6 @@ export interface WelcomeModalProps {
   onTryExample: () => void;
   onCreateCharacter: () => void;
 }
-
-const FRAMEWORK = [
-  {
-    term: "Quests",
-    detail: "You have goals — stretch yourself and be rewarded.",
-  },
-  {
-    term: "Disciplines",
-    detail:
-      "It's the daily choices that underpin your ability to do everything else. Get a heads-up view of how your daily choices are building your capacity — or holding you back.",
-  },
-  {
-    term: "Epics",
-    detail:
-      "Big goals can't be contained in a single task — set yourself ambitious goals and track your progress towards them.",
-  },
-] as const;
 
 /**
  * First-visit explainer — choose the demo character or start mentor intake.
@@ -55,13 +39,13 @@ export function WelcomeModal({ open, onTryExample, onCreateCharacter }: WelcomeM
           <h1 id="welcome-title" className={styles.title}>
             QuestLife
           </h1>
-          <p className={styles.lede}>Life is a series of quests. So manage it that way.</p>
+          <p className={styles.lede}>Welcome to the adventure of your life.</p>
         </header>
 
         <section className={styles.framework} aria-label="How it works">
           <h2 className={styles.frameworkHeading}>How it works</h2>
           <dl className={styles.termList}>
-            {FRAMEWORK.map(({ term, detail }) => (
+            {INTRO_FRAMEWORK.map(({ term, detail }) => (
               <div key={term} className={styles.termRow}>
                 <dt className={styles.term}>{term}</dt>
                 <dd className={styles.detail}>{detail}</dd>
@@ -72,7 +56,7 @@ export function WelcomeModal({ open, onTryExample, onCreateCharacter }: WelcomeM
 
         <div className={styles.actions}>
           <button type="button" className={styles.primaryAction} onClick={onTryExample}>
-            Meet Morgan — example character
+            Meet Jules — example character
           </button>
           <button type="button" className={styles.secondaryAction} onClick={onCreateCharacter}>
             Start my quest

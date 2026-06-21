@@ -5,8 +5,8 @@ import styles from "./Modal.module.css";
 export interface ModalProps {
   open: boolean;
   onClose: () => void;
-  /** Accessible label for the dialog (also shown as the panel title). */
-  title: string;
+  /** Accessible label for the dialog. Shown as panel title when provided. */
+  title?: string;
   children: ReactNode;
 }
 
@@ -34,18 +34,23 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 
   if (!open) return null;
 
+  const labelId = title ? "modal-title" : undefined;
+
   return createPortal(
     <div className={styles.overlay} onClick={onClose}>
       <div
         className={styles.panel}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        aria-labelledby={labelId}
+        aria-label={title ? undefined : "Dialog"}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 id="modal-title" className={styles.title}>
-          {title}
-        </h2>
+        {title ? (
+          <h2 id="modal-title" className={styles.title}>
+            {title}
+          </h2>
+        ) : null}
         {children}
       </div>
     </div>,

@@ -10,6 +10,12 @@ function migrateIntake(raw: Partial<IntakeProfile> | undefined): IntakeProfile {
   return {
     playerName: raw.playerName ?? base.playerName,
     northStar: raw.northStar ?? base.northStar,
+    blockers: raw.blockers ?? base.blockers,
+    dailyHabits:
+      raw.dailyHabits ??
+      (Array.isArray((raw as unknown as { dailyHabits?: string[] }).dailyHabits)
+        ? (raw as unknown as { dailyHabits: string[] }).dailyHabits.join(", ")
+        : base.dailyHabits),
     epics: raw.epics ?? (raw as { campaigns?: string[] }).campaigns?.map((title) => ({
       title,
       difficulty: "moderate" as const,
@@ -21,7 +27,6 @@ function migrateIntake(raw: Partial<IntakeProfile> | undefined): IntakeProfile {
         difficulty: "moderate" as const,
       })) ??
       base.quests,
-    blockers: raw.blockers ?? base.blockers,
     resistance: raw.resistance ?? base.resistance,
     disciplines:
       raw.disciplines ??

@@ -1,6 +1,6 @@
 import type { Epic } from "../../domain/epic.ts";
 import type { Quest, Scale } from "../../domain/quest.ts";
-import { epicIconConfigFor } from "@questlife/epicIcons";
+import { EpicIconTile } from "./EpicIconTile.tsx";
 import styles from "./EpicCard.module.css";
 
 interface EpicCardProps {
@@ -8,22 +8,13 @@ interface EpicCardProps {
   quests: Quest[];
   completedIds: Set<string>;
   assignedIds: Set<string>;
-  /** Whether this card is the active Epic filter. */
+  /** Whether this card is the active Storyline filter. */
   pressed?: boolean;
-  /** Called when the card is clicked to toggle the Epic filter. */
+  /** Called when the card is clicked to toggle the Storyline filter. */
   onClick?: () => void;
 }
 
 const SCALE_ORDER: Record<Scale, number> = { minor: 0, major: 1, boss: 2 };
-
-function EpicIconTile({ name }: { name: string }) {
-  const cfg = epicIconConfigFor(name);
-  return (
-    <div className={styles.iconTile}>
-      <img className={styles.iconFill} src={cfg.src} alt="" />
-    </div>
-  );
-}
 
 const SEG_CLASS: Record<Scale, string> = {
   minor: styles.segMinor,
@@ -40,7 +31,7 @@ function sortForBar(a: Quest, b: Quest): number {
 }
 
 /**
- * Epic card — icon tile, name, description, completion progress, and a
+ * Storyline card — icon tile, name, description, completion progress, and a
  * per-quest tier bar (Minor / Major / Boss). Unassigned quests render at
  * half opacity; assigned quests at full opacity. A green overlay grows
  * left-to-right as quests are completed.

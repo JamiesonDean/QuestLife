@@ -1,0 +1,99 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.5;
+  color: white;
+}
+
+.hint {
+  margin: 0 0 8px;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: white;
+}
+
+.input,
+.textarea,
+.textareaLarge {
+  width: 100%;
+  padding: 10px 14px;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.input {
+  min-height: 41px;
+}
+
+.textarea {
+  min-height: 82px;
+  resize: vertical;
+}
+
+.textareaLarge {
+  min-height: 151px;
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus,
+.textareaLarge:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.error {
+  margin: 0;
+  font-family: var(--ql-font-label);
+  font-size: 14px;
+  color: #ff6b6b;
+}
+
+.submit {
+  align-self: flex-start;
+  padding: 16px 24px;
+  font-family: var(--ql-font-heading);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  color: #353535;
+  background: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.confirmWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 461px;
+  margin: 0 auto;
+}

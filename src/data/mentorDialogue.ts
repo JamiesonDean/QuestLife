@@ -1,6 +1,6 @@
 import type { IntakeProfile } from "../domain/intake.ts";
 
-export type StepKind = "continue" | "reply" | "reply-short" | "review";
+export type StepKind = "continue" | "reply" | "reply-short" | "analyze" | "review";
 
 export interface ConversationStep {
   id: string;
@@ -9,9 +9,6 @@ export interface ConversationStep {
   mentor: string;
   /** Intake field to write on submit. */
   field?: keyof IntakeProfile;
-  /** Split free-text replies into rated items (epics, quests, disciplines). */
-  parseItems?: boolean;
-  listMin?: number;
   placeholder?: string;
   optional?: boolean;
 }
@@ -24,14 +21,15 @@ export const CONVERSATION_STEPS: ConversationStep[] = [
     id: "welcome",
     kind: "continue",
     mentor:
-      "Welcome, traveller. I see you have sought my counsel for the road ahead.",
+      "Welcome, traveller. Before we draw up your charter, I need to understand the road you're on.",
   },
   {
-    id: "north-star",
+    id: "goals",
     kind: "reply",
     field: "northStar",
-    mentor: "Tell me, what is it that you seek?",
-    placeholder: "Speak freely…",
+    mentor:
+      "What are you working toward right now? Think goals, ambitions, the changes you want in your life.",
+    placeholder: "Career move, health, creative work, relationships…",
   },
   {
     id: "name",
@@ -41,54 +39,30 @@ export const CONVERSATION_STEPS: ConversationStep[] = [
     placeholder: "Your name",
   },
   {
-    id: "epics",
-    kind: "reply",
-    field: "epics",
-    parseItems: true,
-    optional: true,
-    mentor:
-      "{playerName} — beneath that, what larger wars are you fighting? The ones that aren't errands.",
-    placeholder: "A sentence or two is enough…",
-  },
-  {
-    id: "quests",
-    kind: "reply",
-    field: "quests",
-    parseItems: true,
-    listMin: 1,
-    mentor:
-      "Good. What needs to move on the road soon? Say what comes — I'll mark the weight of each.",
-    placeholder: "One thing, or several…",
-  },
-  {
     id: "blockers",
     kind: "reply",
     field: "blockers",
-    mentor: "Every road has hazards. What's standing in yours?",
-    placeholder: "Coin, time, fog, other people…",
+    mentor: "Every road has hazards. What's getting in your way — time, energy, fear, other people?",
+    placeholder: "Be honest; it helps me plan…",
   },
   {
-    id: "resistance",
+    id: "habits",
     kind: "reply",
-    field: "resistance",
-    mentor: "And what's gone unspoken — the deed you keep leaving off the log?",
-    placeholder: "No need to dress it up…",
-  },
-  {
-    id: "disciplines",
-    kind: "reply",
-    field: "disciplines",
-    parseItems: true,
-    listMin: 1,
+    field: "dailyHabits",
     mentor:
-      "Last — what do you keep daily, or mean to, that steadies you on the march?",
+      "Last — what daily habits do you already keep, or want to build, that steady you on the march?",
     placeholder: "Morning walk, reading, bed on time…",
+  },
+  {
+    id: "analyze",
+    kind: "analyze",
+    mentor: "Give me a moment to study what you've told me…",
   },
   {
     id: "review",
     kind: "review",
     mentor:
-      "I've set your charter from what you told me. Read it back — amend if I misheard, or seal it and we march.",
+      "{playerName}, here's what I'd propose — Storylines for the larger wars, quests to move soon, and disciplines for daily keep. Does this charter fit?",
   },
 ];
 

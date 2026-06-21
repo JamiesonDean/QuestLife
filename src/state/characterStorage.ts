@@ -10,7 +10,7 @@ import {
   normalizeOwnerRegistry,
   ownerDefaultActiveCharacterId,
 } from "@questlife/ownerRegistry";
-import { TUTORIAL_CHARACTER_ID, TUTORIAL_STARTER_VERSION } from "../data/tutorialCharacter.ts";
+import { TUTORIAL_CHARACTER_ID, TUTORIAL_DISPLAY_NAME, TUTORIAL_STARTER_VERSION } from "../data/tutorialCharacter.ts";
 import {
   characterIdFromName,
   createTutorialCharacter,
@@ -66,10 +66,28 @@ function removeLegacyDemoCharacter(
   return next;
 }
 
+function migrateLegacyTutorialId(
+  characters: Record<string, CharacterRuntime>,
+): Record<string, CharacterRuntime> {
+  const legacy = characters.morgan;
+  if (!legacy || characters[TUTORIAL_CHARACTER_ID]) return characters;
+
+  const { morgan: _removed, ...rest } = characters;
+  return {
+    ...rest,
+    [TUTORIAL_CHARACTER_ID]: {
+      ...legacy,
+      id: TUTORIAL_CHARACTER_ID,
+      displayName: TUTORIAL_DISPLAY_NAME,
+    },
+  };
+}
+
 function ensureTutorialCharacter(
   characters: Record<string, CharacterRuntime>,
 ): Record<string, CharacterRuntime> {
-  const cleaned = removeLegacyDemoCharacter(characters);
+  const migrated = migrateLegacyTutorialId(characters);
+  const cleaned = removeLegacyDemoCharacter(migrated);
   const existing = cleaned[TUTORIAL_CHARACTER_ID];
   if (!existing || (existing.tutorialStarterVersion ?? 0) < TUTORIAL_STARTER_VERSION) {
     return {
@@ -108,7 +126,7 @@ function stripSharedCatalogCharacters(
   return next;
 }
 
-/** Public demo: Morgan is added only after the player chooses the example path. */
+/** Public demo: Jules is always available alongside custom characters. */
 export function activateTutorialDemo(registry: StoredCharacterRegistry): StoredCharacterRegistry {
   const withTutorial = ensureTutorialCharacter(registry.characters);
   return finalizePublicRegistry({
@@ -128,37 +146,24 @@ function normalizePublicRegistry(raw: StoredCharacterRegistry): StoredCharacterR
     raw.welcomeComplete ??
     (raw.version !== undefined && raw.version < REGISTRY_VERSION);
 
-  if (activeCharacterId === "alex" || activeCharacterId === "elliot") {
+  if (activeCharacterId === "alex" || activeCharacterId === "elliot" || activeCharacterId === "morgan") {
     activeCharacterId = TUTORIAL_CHARACTER_ID;
   }
 
-  if (welcomeComplete) {
-    const withTutorial = ensureTutorialCharacter(characters);
+  const withTutorial = ensureTutorialCharacter(characters);
 
+  if (welcomeComplete) {
     if (!activeCharacterId || !withTutorial[activeCharacterId]) {
       activeCharacterId = TUTORIAL_CHARACTER_ID;
     }
-
-    if (!withTutorial[activeCharacterId]) {
-      activeCharacterId = TUTORIAL_CHARACTER_ID;
-    }
-
-    return {
-      version: REGISTRY_VERSION,
-      activeCharacterId,
-      characters: withTutorial,
-      welcomeComplete,
-    };
-  }
-
-  if (activeCharacterId && !characters[activeCharacterId]) {
+  } else if (activeCharacterId && !withTutorial[activeCharacterId]) {
     activeCharacterId = null;
   }
 
   return {
     version: REGISTRY_VERSION,
     activeCharacterId,
-    characters,
+    characters: withTutorial,
     welcomeComplete,
   };
 }
@@ -182,18 +187,18 @@ function clearPersistedQuestLifeData(): void {
   }
 }
 
-/** In-memory starting point — used on every load in session-only demo mode. */
+/** In-memory starting point when no save exists yet. */
 export function createFreshRegistry(): StoredCharacterRegistry {
   if (IS_OWNER_MODE) {
     return createOwnerFreshRegistry();
   }
 
-  return {
+  return finalizePublicRegistry({
     version: REGISTRY_VERSION,
     activeCharacterId: null,
     characters: {},
     welcomeComplete: false,
-  };
+  });
 }
 
 export function loadCharacterRegistry(): StoredCharacterRegistry {
@@ -210,7 +215,7 @@ export function loadCharacterRegistry(): StoredCharacterRegistry {
   if (raw) {
     try {
       const parsed = JSON.parse(raw) as StoredCharacterRegistry;
-      return normalizeRegistry({
+      const normalized = normalizeRegistry({
         activeCharacterId:
           parsed.activeCharacterId ??
           (IS_OWNER_MODE ? ownerDefaultActiveCharacterId() : TUTORIAL_CHARACTER_ID),
@@ -218,6 +223,11 @@ export function loadCharacterRegistry(): StoredCharacterRegistry {
         version: parsed.version,
         welcomeComplete: parsed.welcomeComplete,
       });
+      const next = JSON.stringify(normalized);
+      if (next !== raw) {
+        localStorage.setItem(REGISTRY_KEY, next);
+      }
+      return normalized;
     } catch {
       // fall through to migration
     }
@@ -237,7 +247,8 @@ export function loadCharacterRegistry(): StoredCharacterRegistry {
 export function saveCharacterRegistry(registry: StoredCharacterRegistry): void {
   if (SESSION_ONLY_STORAGE) return;
   if (typeof localStorage === "undefined") return;
-  localStorage.setItem(REGISTRY_KEY, JSON.stringify(registry));
+  const toSave = IS_OWNER_MODE ? registry : finalizePublicRegistry(registry);
+  localStorage.setItem(REGISTRY_KEY, JSON.stringify(toSave));
 }
 
 export function markWelcomeComplete(registry: StoredCharacterRegistry): StoredCharacterRegistry {

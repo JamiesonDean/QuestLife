@@ -1,0 +1,114 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  background: rgba(243, 182, 0, 0.08);
+  border: 1.5px solid #f3b600;
+  border-radius: 20px;
+  box-shadow: 0 0 6px 0 rgba(243, 215, 0, 0.75);
+  box-sizing: border-box;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+  color: white;
+}
+
+.description {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  text-align: center;
+  color: white;
+}
+
+.questGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 283px;
+}
+
+.questGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.groupLabel {
+  margin: 0;
+  font-family: var(--ql-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  color: white;
+}
+
+.groupRow {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.barMinor,
+.barMajor,
+.barBoss {
+  flex-shrink: 0;
+  width: 8px;
+  border-radius: 10px;
+  align-self: stretch;
+  min-height: 24px;
+}
+
+.barMinor {
+  background: var(--ql-tier-minor);
+}
+
+.barMajor {
+  background: var(--ql-tier-major);
+}
+
+.barBoss {
+  background: var(--ql-tier-boss);
+}
+
+.questList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+  font-family: var(--ql-font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  color: white;
+}
+
+.start {
+  padding: 16px 24px;
+  font-family: var(--ql-font-heading);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  color: #353535;
+  background: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.start:hover {
+  background: rgba(255, 255, 255, 0.92);
+}

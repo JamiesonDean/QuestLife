@@ -3,7 +3,7 @@ import type { Epic } from "../../domain/epic.ts";
 import type { Quest } from "../../domain/quest.ts";
 import { getSessionQuote } from "../../data/quotes.ts";
 import { EpicCard } from "./EpicCard.tsx";
-import { NewEpicModal } from "./NewEpicModal.tsx";
+import { NewStorylineModal } from "./NewStorylineModal.tsx";
 import styles from "./EpicsPanel.module.css";
 
 const QUOTE = getSessionQuote();
@@ -13,22 +13,20 @@ interface EpicsPanelProps {
   quests: Quest[];
   completedIds: Set<string>;
   assignedIds: Set<string>;
-  /** Name of the currently selected epic filter, or null for no filter. */
+  /** Name of the currently selected Storyline filter, or null for no filter. */
   epicFilter: string | null;
-  /** Toggle the named epic as the active filter (deselects if already active). */
+  /** Toggle the named Storyline as the active filter (deselects if already active). */
   onEpicToggle: (name: string) => void;
-  /** Persist a newly created epic. */
-  onCreateEpic: (epic: Epic) => void;
-  /** Lowercase epic names used to prevent duplicates in the create form. */
-  existingEpicNames: Set<string>;
+  /** Persist a newly created Storyline and its starter quests. */
+  onCreateStoryline: (storyline: Epic, quests: Quest[]) => void;
+  /** Lowercase Storyline names used to prevent duplicates in the create form. */
+  existingStorylineNames: Set<string>;
+  existingQuestIds: Set<string>;
 }
 
 /**
  * Right-column panel shown when the "All Quests" tab is active. Displays a
- * motivational quote followed by a 2-column grid of Epic Cards.
- *
- * Each Epic Card is a filter button: clicking selects/deselects that epic,
- * which narrows the quest list in the left column.
+ * motivational quote followed by a 2-column grid of Storyline cards.
  */
 export function EpicsPanel({
   epics,
@@ -37,8 +35,9 @@ export function EpicsPanel({
   assignedIds,
   epicFilter,
   onEpicToggle,
-  onCreateEpic,
-  existingEpicNames,
+  onCreateStoryline,
+  existingStorylineNames,
+  existingQuestIds,
 }: EpicsPanelProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -51,13 +50,13 @@ export function EpicsPanel({
 
       <div className={styles.epicsSection}>
         <div className={styles.header}>
-          <h2 className={styles.heading}>Epics</h2>
+          <h2 className={styles.heading}>Storylines</h2>
           <button
             type="button"
             className={styles.newEpic}
             onClick={() => setModalOpen(true)}
           >
-            + New Epic
+            + New Storyline
           </button>
         </div>
         <div className={styles.grid}>
@@ -78,11 +77,12 @@ export function EpicsPanel({
         </div>
       </div>
 
-      <NewEpicModal
+      <NewStorylineModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={onCreateEpic}
-        existingNames={existingEpicNames}
+        onSubmit={onCreateStoryline}
+        existingStorylineNames={existingStorylineNames}
+        existingQuestIds={existingQuestIds}
       />
     </div>
   );

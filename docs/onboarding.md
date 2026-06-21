@@ -12,7 +12,7 @@
 Mentor conversation (intake) → Review & seed → Onboarding Phase 0–7
 ```
 
-**Implemented:** [`MentorIntakeModal`](../src/components/onboarding/MentorIntakeModal.tsx) — modal overlay with The Mentor. Collects rated quests, optional epics, daily disciplines, blockers, and resistance. Difficulty (`light` → `legendary`) drives XP, quest scale, unlock level, and discipline rewards via [`difficulty.ts`](../src/domain/difficulty.ts). Triggered on first visit (required) or via **+ New character** (optional dismiss).
+**Implemented:** [`MentorIntakeModal`](../src/components/onboarding/MentorIntakeModal.tsx) — modal overlay with Soren. Collects goals, blockers, and daily habits; generates a starter charter via heuristics (`intakeAnalysis.ts`) for player confirmation. **Planned:** LLM-backed analysis — see [`soren-intake-analysis.md`](./soren-intake-analysis.md). Triggered on first visit (public) or via **+ New character** (optional dismiss).
 
 See [`class-sorting-and-mentor-matching.md`](./class-sorting-and-mentor-matching.md) for class sort, mentor assignment, and profile schema. **Progressive reveal (this doc) begins after StarterPack is seeded.**
 

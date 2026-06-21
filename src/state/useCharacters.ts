@@ -144,21 +144,59 @@ export function useCharacters() {
     [active, disciplines, patchActive],
   );
 
-  const addQuest = useCallback(
-    (quest: Quest) => {
-      if (!active) return;
-      patchActive({ customQuests: [...active.customQuests, quest] });
-    },
-    [active, patchActive],
-  );
+  const addQuest = useCallback((quest: Quest) => {
+    setRegistry((prev) => {
+      const id = prev.activeCharacterId;
+      if (!id) return prev;
+      const current = prev.characters[id];
+      if (!current) return prev;
+      return patchActiveCharacter(prev, {
+        customQuests: [...current.customQuests, quest],
+      });
+    });
+  }, []);
 
-  const addEpic = useCallback(
-    (epic: Epic) => {
-      if (!active) return;
-      patchActive({ customEpics: [...active.customEpics, epic] });
-    },
-    [active, patchActive],
-  );
+  const addEpic = useCallback((epic: Epic) => {
+    setRegistry((prev) => {
+      const id = prev.activeCharacterId;
+      if (!id) return prev;
+      const current = prev.characters[id];
+      if (!current) return prev;
+      return patchActiveCharacter(prev, {
+        customEpics: [...current.customEpics, epic],
+      });
+    });
+  }, []);
+
+  /** Add a Storyline and its quests in one write — avoids stale state when seeding multiple quests. */
+  const addStorylineWithQuests = useCallback((storyline: Epic, newQuests: Quest[]) => {
+    let hydrated: GameState | undefined;
+
+    setRegistry((prev) => {
+      const id = prev.activeCharacterId;
+      if (!id) return prev;
+      const current = prev.characters[id];
+      if (!current) return prev;
+
+      const assignedQuests = [...current.gameState.assignedQuests];
+      for (const quest of newQuests) {
+        if (!assignedQuests.includes(quest.id)) assignedQuests.push(quest.id);
+      }
+
+      hydrated = { ...current.gameState, assignedQuests };
+
+      return patchActiveCharacter(prev, {
+        customEpics: [...current.customEpics, storyline],
+        customQuests: [...current.customQuests, ...newQuests],
+        gameState: hydrated,
+      });
+    });
+
+    if (hydrated) {
+      persistGameStateRef.current = false;
+      dispatchRaw({ type: "hydrate", state: hydrated });
+    }
+  }, []);
 
   const addDiscipline = useCallback(
     (discipline: Discipline) => {
@@ -233,6 +271,7 @@ export function useCharacters() {
     dispatch,
     addQuest,
     addEpic,
+    addStorylineWithQuests,
     addDiscipline,
     addDisciplineHabit,
     completeIntake,

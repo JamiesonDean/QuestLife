@@ -5,9 +5,9 @@ import type { Quest } from "../domain/quest.ts";
 /** Bump to reset the public demo character to the latest template. */
 export const TUTORIAL_STARTER_VERSION = 4;
 
-export const TUTORIAL_CHARACTER_ID = "morgan";
+export const TUTORIAL_CHARACTER_ID = "jules";
 
-export const TUTORIAL_DISPLAY_NAME = "Morgan";
+export const TUTORIAL_DISPLAY_NAME = "Jules";
 export const TUTORIAL_CHARACTER_CLASS = "Specialist / Wayfinder";
 
 export const TUTORIAL_NORTH_STAR =

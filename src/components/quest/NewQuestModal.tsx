@@ -204,7 +204,7 @@ export function NewQuestModal({
 
         {!isSide && (
           <label className={styles.field}>
-            <span className={styles.label}>Epic (optional)</span>
+            <span className={styles.label}>Storyline (optional)</span>
             <select
               className={styles.select}
               value={epic}

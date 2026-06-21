@@ -4,7 +4,7 @@ import { DisciplineCard } from "./components/discipline/index.ts";
 import { EpicsPanel } from "./components/epic/index.ts";
 import { CharacterHeader } from "./components/character/index.ts";
 import { AppHeader } from "./components/layout/index.ts";
-import { MentorIntakeModal, WelcomeModal } from "./components/onboarding/index.ts";
+import { HelpModal, MentorIntakeModal, WelcomeModal } from "./components/onboarding/index.ts";
 import { StatIcon } from "./components/stats/StatIcon.tsx";
 import { AnimatedList, AnimatedListItem } from "./components/ui/AnimatedList.tsx";
 import { Tabs } from "./components/ui/Tabs.tsx";
@@ -16,6 +16,7 @@ import {
 } from "./data/tutorialCharacter.ts";
 import { DEFAULT_CHARACTER_CLASS } from "./domain/character.ts";
 import { ownerDefaultDisplayName } from "@questlife/ownerRegistry";
+import type { Epic } from "./domain/epic.ts";
 import type { Category, Quest } from "./domain/quest.ts";
 import { deriveQuestView, isUnassignedPool, showInCurrentTab } from "./domain/quest.ts";
 import type { IntakeProfile } from "./domain/intake.ts";
@@ -68,7 +69,7 @@ export function App() {
     state,
     dispatch,
     addQuest,
-    addEpic,
+    addStorylineWithQuests,
     addDisciplineHabit,
     completeIntake,
     completeWelcome,
@@ -83,6 +84,7 @@ export function App() {
   const [categoryFilter, setCategoryFilter] = useState<Set<Category>>(new Set());
   const [epicFilter, setEpicFilter] = useState<string | null>(null);
   const [questModalOpen, setQuestModalOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const playerName =
     active?.displayName ?? (IS_OWNER_MODE ? ownerDefaultDisplayName() : TUTORIAL_DISPLAY_NAME);
@@ -155,6 +157,10 @@ export function App() {
     setEpicFilter((prev) => (prev === name ? null : name));
   }
 
+  function handleCreateStoryline(storyline: Epic, storylineQuests: Quest[]) {
+    addStorylineWithQuests(storyline, storylineQuests);
+  }
+
   function handleAddQuest(quest: Quest) {
     addQuest(quest);
     dispatch({ type: "assignQuest", id: quest.id });
@@ -190,8 +196,10 @@ export function App() {
         characters={characterSummaries}
         activeCharacterId={activeCharacterId}
         onSelectCharacter={switchCharacter}
-        onNewCharacter={IS_OWNER_MODE ? undefined : openMentorModal}
+        onNewCharacter={openMentorModal}
+        onHelp={() => setHelpOpen(true)}
       />
+      <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
       {!IS_OWNER_MODE && (
         <WelcomeModal
           open={!welcomeComplete}
@@ -199,14 +207,12 @@ export function App() {
           onCreateCharacter={handleCreateFromWelcome}
         />
       )}
-      {!IS_OWNER_MODE && (
-        <MentorIntakeModal
-          key={mentorSession}
-          open={mentorOpen}
-          onClose={() => setMentorOpen(false)}
-          onComplete={handleIntakeComplete}
-        />
-      )}
+      <MentorIntakeModal
+        key={mentorSession}
+        open={mentorOpen}
+        onClose={() => setMentorOpen(false)}
+        onComplete={handleIntakeComplete}
+      />
       <main className={styles.screen}>
         <div className={styles.inner}>
           {boardReady ? (
@@ -297,8 +303,9 @@ export function App() {
                   assignedIds={assignedIds}
                   epicFilter={epicFilter}
                   onEpicToggle={toggleEpic}
-                  onCreateEpic={addEpic}
-                  existingEpicNames={epicNames}
+                  onCreateStoryline={handleCreateStoryline}
+                  existingStorylineNames={epicNames}
+                  existingQuestIds={questIds}
                 />
               ) : (
                 <>

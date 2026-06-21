@@ -24,7 +24,7 @@ function tutorialCatalogIsPure(character: CharacterRuntime): boolean {
 }
 
 /**
- * Drop owner-tagged characters and reset Morgan if her catalog was contaminated
+ * Drop owner-tagged characters and reset Jules if the demo catalog was contaminated
  * (e.g. stale localStorage from an owner build on the same origin).
  */
 export function guardPublicRegistry(registry: StoredCharacterRegistry): StoredCharacterRegistry {
@@ -39,8 +39,8 @@ export function guardPublicRegistry(registry: StoredCharacterRegistry): StoredCh
     if (activeCharacterId === id) activeCharacterId = null;
   }
 
-  const morgan = characters[TUTORIAL_CHARACTER_ID];
-  if (morgan && !tutorialCatalogIsPure(morgan)) {
+  const tutorial = characters[TUTORIAL_CHARACTER_ID];
+  if (tutorial && !tutorialCatalogIsPure(tutorial)) {
     delete characters[TUTORIAL_CHARACTER_ID];
     changed = true;
     if (activeCharacterId === TUTORIAL_CHARACTER_ID) activeCharacterId = null;

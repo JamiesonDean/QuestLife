@@ -11,6 +11,7 @@ export interface AppHeaderProps {
   activeCharacterId: string | null;
   onSelectCharacter: (id: string) => void;
   onNewCharacter?: () => void;
+  onHelp?: () => void;
 }
 
 /**
@@ -21,12 +22,18 @@ export function AppHeader({
   activeCharacterId,
   onSelectCharacter,
   onNewCharacter,
+  onHelp,
 }: AppHeaderProps) {
   return (
     <header className={styles.header}>
       <p className={styles.wordmark}>QuestLife</p>
       <div className={styles.actions}>
-        {characters.length > 1 ? (
+        {onHelp ? (
+          <button type="button" className={styles.help} onClick={onHelp}>
+            Help
+          </button>
+        ) : null}
+        {characters.length > 0 ? (
           <div className={styles.characterSwitch} role="tablist" aria-label="Characters">
             {characters.map((character) => {
               const active = character.id === activeCharacterId;

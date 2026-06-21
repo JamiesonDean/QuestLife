@@ -334,7 +334,7 @@ interface MentorAssignment {
 | A. A consistent morning ritual | → check discipline, HP | +1 Master |
 | B. Long uninterrupted deep work | → fewer assigned quests | +1 Sage |
 | C. Meaningful time with key people | → Alliances-weighted epics | +1 Guide, +1 relatedness |
-| D. Visible output shipped | → Crafting / Design Guild quests | +1 Master, +1 competence |
+| D. Visible output shipped | → Crafting / Guild quests | +1 Master, +1 competence |
 | E. Clear wins on hard commitments | → accountability framing | +1 Veteran |
 
 *(Stored in profile meta for intake; light archetype points.)*
