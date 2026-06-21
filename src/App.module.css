@@ -4,18 +4,6 @@
   min-height: 100%;
 }
 
-.publicDemoBanner {
-  margin: 0;
-  padding: 8px 16px;
-  text-align: center;
-  font-family: var(--ql-font-ui, "Open Sans", sans-serif);
-  font-size: 13px;
-  font-weight: 600;
-  color: #3d2e1f;
-  background: #e8dcc8;
-  border-bottom: 1px solid #c4b59a;
-}
-
 .landing {
   flex: 1;
   min-height: 0;

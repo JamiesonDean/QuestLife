@@ -186,11 +186,6 @@ export function App() {
 
   return (
     <div className={styles.app}>
-      {!IS_OWNER_MODE && (
-        <p className={styles.publicDemoBanner} role="status">
-          Public demo — Morgan only. Your private quests are not in this build.
-        </p>
-      )}
       <AppHeader
         characters={characterSummaries}
         activeCharacterId={activeCharacterId}

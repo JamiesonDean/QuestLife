@@ -44,6 +44,3 @@ if (failed) {
 }
 
 console.log("PASS — no private quest strings in the live JavaScript bundle.");
-if (!html.includes("Public demo")) {
-  console.warn("Note: demo banner not in HTML (may be rendered by React — check the page visually).");
-}
