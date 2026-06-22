@@ -21,7 +21,6 @@ import type { Category, Quest } from "./domain/quest.ts";
 import { deriveQuestView, isUnassignedPool, showInCurrentTab } from "./domain/quest.ts";
 import type { IntakeProfile } from "./domain/intake.ts";
 import { clamp, levelFromXp, MAX_HP, MAX_MANA } from "./domain/player.ts";
-import { todayStr } from "./state/game.ts";
 import { useCharacters } from "./state/useCharacters.ts";
 import chevronDown from "./assets/chevron-down.svg";
 import styles from "./App.module.css";
@@ -138,11 +137,11 @@ export function App() {
     for (const quest of quests) {
       map.set(
         quest.id,
-        deriveQuestView(quest, level.level, state.assignedQuests, state.completions, todayStr()),
+        deriveQuestView(quest, level.level, state.assignedQuests, state.completions, state.day),
       );
     }
     return map;
-  }, [quests, level.level, state.assignedQuests, state.completions]);
+  }, [quests, level.level, state.assignedQuests, state.completions, state.day]);
 
   function toggleCategory(cat: Category) {
     setCategoryFilter((prev) => {
